@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Killer Game - ค่ายสัมพันธ์ วิศวะ 2 วิทยาเขต</title>
+    <title>Killer Game - สานสัมพันธ์ วิศวะ 2 วิทยาเขต</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,7 +19,7 @@
         <header class="bg-slate-900 px-4 py-3 border-b border-slate-700 flex justify-between items-center z-10">
             <div>
                 <h1 class="font-bold text-lg text-emerald-400">Killer Game</h1>
-                <p class="text-xs text-slate-400">ค่ายสัมพันธ์ วิศวะ 2 วิทยาเขต</p>
+                <p class="text-xs text-slate-400">สานสัมพันธ์ วิศวะ 2 วิทยาเขต</p>
             </div>
             <div id="header-stats" class="text-right text-xs">
                 <span class="bg-emerald-900/60 text-emerald-300 px-2 py-1 rounded border border-emerald-700/50">รอด: <span id="stat-alive">0</span></span>
@@ -37,11 +37,11 @@
                 <div class="relative rounded-2xl overflow-hidden border border-slate-700 shadow-lg bg-slate-900">
                     <img id="home-banner-img" 
                          src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" 
-                         alt="ค่ายสัมพันธ์ วิศวะ 2 วิทยาเขต" 
+                         alt="สานสัมพันธ์ วิศวะ 2 วิทยาเขต" 
                          class="w-full h-36 object-cover opacity-80">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent flex flex-col justify-end p-4 text-center">
                         <h2 class="text-lg font-bold text-white tracking-wide">เข้าสู่ระบบเกม Killer</h2>
-                        <p class="text-xs text-emerald-300">ค่ายสัมพันธ์ วิศวะ 2 วิทยาเขต</p>
+                        <p class="text-xs text-emerald-300">สานสัมพันธ์ วิศวะ 2 วิทยาเขต</p>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                 <form id="form-login" class="space-y-4 bg-slate-900/50 p-4 rounded-xl border border-slate-700">
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อ-นามสกุลจริง</label>
-                        <input type="text" id="login-fullname" required placeholder="เช่น ธนาวุฒิ สังข์มัน" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-emerald-500">
+                        <input type="text" id="login-fullname" required placeholder="เช่น วิศวะ เกียร์ทอง" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-emerald-500">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">รหัส 6 หลัก (ตั้งครั้งแรกจะล็อกถาวร)</label>
@@ -125,7 +125,7 @@
 
                     <!-- 3. แสดงภารกิจเฉพาะตัวของเป้าหมายที่สตาฟกำหนดไว้ -->
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้ (กำหนดโดยสตาฟ)</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้ </label>
                         <input type="text" id="kill-mission-input" readonly required placeholder="กรุณาเลือกเป้าหมายด้านบนเพื่อดูภารกิจ" class="w-full bg-slate-900/90 border border-amber-500/40 text-amber-300 font-medium rounded-lg px-3 py-2.5 text-sm focus:outline-none cursor-not-allowed">
                     </div>
 
@@ -146,7 +146,7 @@
                 
                 <div class="space-y-3">
                     <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-700">
-                        <h3 class="text-xs font-semibold text-slate-400 mb-2">Top Killers (อันดับผู้ล่าสูงสุด)</h3>
+                        <h3 class="text-xs font-semibold text-slate-400 mb-2">Top Killers (อันดับสูงสุด)</h3>
                         <div id="leaderboard-list" class="space-y-1.5 text-xs">
                             <!-- เรนเดอร์ด้วย JS -->
                         </div>
@@ -168,9 +168,9 @@
                     <div>
                         <label class="block text-[11px] font-medium text-slate-300 mb-1">นำเข้ารายชื่อ & กำหนดภารกิจรายคน</label>
                         <p class="text-[10px] text-slate-400 mb-1.5">รูปแบบ: <span class="text-amber-300">ชื่อ นามสกุล ชื่อเล่น ภาควิชา ภารกิจ</span> (1 คนต่อ 1 บรรทัด)</p>
-                        <textarea id="admin-import-data" rows="4" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="ธนาวุฒิ สังข์มัน ปาล์ม CE ถ่ายรูปคู่กัน
-กานดา สิงขอน กาน PRE ชนหมัดกันพร้อมตะโกนชื่อภาค
-ณัฐพล ม่วงศรี นัท ME ขอลายเซ็นบนกระดาษ"></textarea>
+                        <textarea id="admin-import-data" rows="4" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="โยธา คนจน ธา CE ถ่ายรูปคู่กัน
+จอมเหนือ พระนคร เหนือ PRE พูดคำว่าสนุก
+วิศวะ เกียร์ทอง วิท MAE พูดคำว่าอร่อย"></textarea>
                         <button onclick="importPlayersData()" class="mt-1.5 w-full bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-xs py-2 rounded-lg transition">
                             + บันทึกรายชื่อและภารกิจเข้าระบบ
                         </button>
@@ -233,11 +233,11 @@
     <!-- JavaScript ระบบทั้งหมด -->
     <script>
         const STAFF_USER = "smoeng69";
-        const STAFF_PASS = "0089";
+        const STAFF_PASS = "2569";
 
         // ฐานข้อมูลเริ่มต้น
         let defaultPlayers = [
-            { fullname: "ธนาวุฒิ สังข์มัน", nickname: "ปาล์ม", dept: "CE", pin: null, alive: true, kills: 0, mission: "ถ่ายรูปคู่กัน", killedBy: null, killMission: null },
+            { fullname: "โยธา คนจน", nickname: "ธา", dept: "CE", pin: null, alive: true, kills: 0, mission: "ถ่ายรูปคู่กัน", killedBy: null, killMission: null },
             { fullname: "กานดา สิงขอน", nickname: "กาน", dept: "PRE", pin: null, alive: true, kills: 0, mission: "ชนหมัดกัน", killedBy: null, killMission: null },
             { fullname: "ณัฐพล ม่วงศรี", nickname: "นัท", dept: "ME", pin: null, alive: true, kills: 0, mission: "จับมือทักทาย", killedBy: null, killMission: null },
             { fullname: "จิรภัทร แสงทอง", nickname: "จิร", dept: "EE", pin: null, alive: true, kills: 0, mission: "บอกความลับ 1 อย่าง", killedBy: null, killMission: null }
@@ -446,7 +446,7 @@
                 killedWarning.classList.add('hidden');
             } else {
                 badge.className = "absolute top-3 right-3 bg-rose-500/10 text-rose-400 text-[10px] px-2 py-0.5 rounded-full border border-rose-500/20";
-                badge.innerText = "เสียชีวิตแล้ว";
+                badge.innerText = "โดนKill";
                 killBtnContainer.classList.add('hidden');
                 killedWarning.classList.remove('hidden');
             }
@@ -514,7 +514,7 @@
             const target = window.players.find(p => p.fullname === targetName);
             const hunter = window.players.find(p => p.fullname === currentUser);
 
-            if (!target || !target.alive) { alert("เป้าหมายนี้ไม่อยู่ในระบบหรือเสียชีวิตไปแล้ว"); return; }
+            if (!target || !target.alive) { alert("เป้าหมายนี้ไม่อยู่ในระบบหรือโดนKillไปแล้ว"); return; }
             if (target.pin !== targetPin) { alert("รหัสผ่าน 6 หลักของเป้าหมายไม่ถูกต้อง!"); return; }
 
             const completedMission = target.mission;
