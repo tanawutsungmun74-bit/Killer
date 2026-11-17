@@ -6,11 +6,6 @@
     <title>Killer Game - สานสัมพันธ์ วิศวะ 2 วิทยาเขต</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Firebase App & Realtime Database SDK (Compat) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
     <style>
         body { font-family: 'Prompt', sans-serif; }
     </style>
@@ -38,7 +33,7 @@
             <!-- ================= หน้า 1: ล็อกอิน ================= -->
             <section id="view-login" class="view-section space-y-5">
                 
-                <!-- รูปภาพหน้าแรก -->
+                <!-- 4. รูปภาพหน้าแรก (เปลี่ยนลิงก์ src เป็นรูปโลโก้ค่ายของคุณได้ตรงนี้) -->
                 <div class="relative rounded-2xl overflow-hidden border border-slate-700 shadow-lg bg-slate-900">
                     <img id="home-banner-img" 
                          src="https://i.postimg.cc/3J2SP8TN/12312414.jpg" 
@@ -58,21 +53,21 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">รหัส 6 หลัก (ตั้งครั้งแรกจะล็อกถาวร)</label>
-                        <input type="password" id="login-pin" maxlength="6" required placeholder="••••••" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm tracking-widest text-center focus:outline-none focus:border-emerald-500">
+                        <input type="password" id="login-pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="ตั้ง PIN 6 หลักครั้งแรก / กรอก PIN เดิม" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm tracking-widest text-center focus:outline-none focus:border-emerald-500">
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg transition text-sm shadow-lg shadow-emerald-600/20">
                         ล็อกอินเข้าสู่ระบบ
                     </button>
                 </form>
 
-                <!-- การล็อกอินล่าสุด (Recent Logins) -->
+                <!-- 1. การล็อกอินล่าสุด (Recent Logins) -->
                 <div id="recent-logins-box" class="hidden bg-slate-900/40 p-3.5 rounded-xl border border-slate-700/80 space-y-2">
                     <div class="flex justify-between items-center">
                         <p class="text-xs text-slate-400 font-medium">🕒 การล็อกอินล่าสุด (กดเพื่อใส่ชื่ออัตโนมัติ):</p>
                         <button type="button" onclick="clearRecentLogins()" class="text-[10px] text-slate-500 hover:text-rose-400">ล้างประวัติ</button>
                     </div>
                     <div id="recent-logins-list" class="flex flex-wrap gap-1.5">
-                        <!-- ปุ่มรายชื่อล็อกอินล่าสุด -->
+                        <!-- ปุ่มรายชื่อล็อกอินล่าสุดจะแสดงตรงนี้ -->
                     </div>
                 </div>
 
@@ -128,8 +123,9 @@
                         </select>
                     </div>
 
+                    <!-- 3. แสดงภารกิจเฉพาะตัวของเป้าหมายที่สตาฟกำหนดไว้ -->
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้ </label>
                         <input type="text" id="kill-mission-input" readonly required placeholder="กรุณาเลือกเป้าหมายด้านบนเพื่อดูภารกิจ" class="w-full bg-slate-900/90 border border-amber-500/40 text-amber-300 font-medium rounded-lg px-3 py-2.5 text-sm focus:outline-none cursor-not-allowed">
                     </div>
 
@@ -168,21 +164,26 @@
                 <div id="admin-panel" class="hidden bg-slate-900 p-3.5 rounded-xl border border-emerald-500/40 space-y-3">
                     <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">⚡ Staff Control Panel (smoeng69)</h3>
                     
+                    <!-- 3. ช่องนำเข้ารายชื่อพร้อมภารกิจของแต่ละคน -->
                     <div>
                         <label class="block text-[11px] font-medium text-slate-300 mb-1">นำเข้ารายชื่อ & กำหนดภารกิจรายคน</label>
                         <p class="text-[10px] text-slate-400 mb-1.5">รูปแบบ: <span class="text-amber-300">ชื่อ นามสกุล ชื่อเล่น ภาควิชา ภารกิจ</span> (1 คนต่อ 1 บรรทัด)</p>
-                        <textarea id="admin-import-data" rows="4" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="ชื่อจริง นามสกุล ชื่อเล่น ภาควิชา ภารกิจที่ต้องทำ"></textarea>
+                        <textarea id="admin-import-data" rows="4" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" placeholder="โยธา คนจน ธา CE ถ่ายรูปคู่กัน
+จอมเหนือ พระนคร เหนือ PRE พูดคำว่าสนุก
+วิศวะ เกียร์ทอง วิท MAE พูดคำว่าอร่อย"></textarea>
                         <button onclick="importPlayersData()" class="mt-1.5 w-full bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-xs py-2 rounded-lg transition">
                             + บันทึกรายชื่อและภารกิจเข้าระบบ
                         </button>
                     </div>
 
+                    <!-- จัดการรหัสและรีสตาร์ทระบบ -->
                     <div class="pt-2 border-t border-slate-800 space-y-2">
                         <div class="flex gap-2">
                             <button onclick="adminResetAllPins()" class="flex-1 bg-amber-700/50 hover:bg-amber-700/80 border border-amber-600/40 text-xs py-2 rounded-lg text-amber-200 transition">ปลดล็อกรหัส PIN ทุกคน</button>
                             <button onclick="adminForceAllLogin()" class="flex-1 bg-blue-700/50 hover:bg-blue-700/80 border border-blue-600/40 text-xs py-2 rounded-lg text-blue-200 transition">จำลองล็อกอินครบทุกคน</button>
                         </div>
                         
+                        <!-- 2. ปุ่มรีสตาร์ททุกอย่าง (ต้องใส่รหัสยืนยัน) -->
                         <button onclick="openRestartModal()" class="w-full bg-rose-900/70 hover:bg-rose-800 border border-rose-600/50 text-rose-200 font-semibold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5">
                             <span>⚠️ รีสตาร์ทระบบทั้งหมด (ล้างข้อมูลเริ่มเกมใหม่)</span>
                         </button>
@@ -218,7 +219,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-slate-300 mb-1">กรอกรหัสล็อกอินสตาฟเพื่อยืนยัน:</label>
-                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (2569)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
+                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (0089)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
                 </div>
                 <div class="flex gap-2">
                     <button type="button" onclick="closeRestartModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs py-2.5 rounded-lg transition">ยกเลิก</button>
@@ -229,97 +230,134 @@
 
     </div>
 
-    <!-- JavaScript ระบบ Firebase Realtime Database -->
+    <!-- Firebase Realtime Database: shared game state across devices -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <script>
-        // ตั้งค่า Firebase ตาม Project ของคุณ
+        const STAFF_USER = "smoeng69";
+        const STAFF_PASS = "2569";
+
         const firebaseConfig = {
-            apiKey: "AIzaSyBwHipnMGrRlJi6xKMWFC9ce0PC5i2TY",
+            apiKey: "AIzaSyBzwHipnMgRrlJi6xKMWfCG9ce0PC5i2TY",
             authDomain: "killer-game-kmutnb.firebaseapp.com",
+            databaseURL: "https://killer-game-kmutnb-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "killer-game-kmutnb",
-            storageBucket: "killer-game-kmutnb.appspot.com",
+            storageBucket: "killer-game-kmutnb.firebasestorage.app",
             messagingSenderId: "56198732",
             appId: "1:56198732:web:f4bb06b2aacfa5b00016e9",
             measurementId: "G-H8K0T850HK"
         };
 
-        // เริ่มต้นเชื่อมต่อ Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        const stateRef = db.ref("killerGame/state");
 
-        const STAFF_USER = "smoeng69";
-        const STAFF_PASS = "2569";
+        const defaultPlayers = [
+            { fullname: "โยธา คนจน", nickname: "ธา", dept: "CE", pin: null, alive: true, kills: 0, mission: "ถ่ายรูปคู่กัน", killedBy: null, killMission: null },
+            { fullname: "กานดา สิงขอน", nickname: "กาน", dept: "PRE", pin: null, alive: true, kills: 0, mission: "ชนหมัดกัน", killedBy: null, killMission: null },
+            { fullname: "ณัฐพล ม่วงศรี", nickname: "นัท", dept: "ME", pin: null, alive: true, kills: 0, mission: "จับมือทักทาย", killedBy: null, killMission: null },
+            { fullname: "จิรภัทร แสงทอง", nickname: "จิร", dept: "EE", pin: null, alive: true, kills: 0, mission: "บอกความลับ 1 อย่าง", killedBy: null, killMission: null }
+        ];
 
-        window.players = [];
+        let players = [];
         let killHistory = [];
-        let recentLogins = [];
-        let currentUser = null;
+        let recentLogins = JSON.parse(localStorage.getItem("killer_recent_logins_v5") || "[]");
+        let currentUser = localStorage.getItem("killer_current_user_v5") || null;
+        let stateReady = false;
+        let applyingRemoteState = false;
 
-        // โหลดข้อมูลแบบ Realtime จาก Firebase
-        function loadState() {
-            const savedUser = localStorage.getItem('killer_current_user_v7');
-            const savedRecent = localStorage.getItem('killer_recent_logins_v7');
-            if (savedUser) currentUser = savedUser;
-            if (savedRecent) recentLogins = JSON.parse(savedRecent);
+        function cleanState(value) {
+            return {
+                players: Array.isArray(value && value.players) ? value.players : [],
+                killHistory: Array.isArray(value && value.killHistory) ? value.killHistory : []
+            };
+        }
 
-            // ฟังการเปลี่ยนแปลงข้อมูลผู้เล่น
-            db.ref('players').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    window.players = Array.isArray(data) ? data : Object.values(data);
-                } else {
-                    window.players = [];
+        function saveLocalSession() {
+            if (currentUser) localStorage.setItem("killer_current_user_v5", currentUser);
+            else localStorage.removeItem("killer_current_user_v5");
+            localStorage.setItem("killer_recent_logins_v5", JSON.stringify(recentLogins));
+        }
+
+        function applyState(value) {
+            const state = cleanState(value);
+            players = state.players;
+            killHistory = state.killHistory;
+            window.players = players; // รองรับส่วนแสดงผลเดิม
+            applyingRemoteState = true;
+            updateHeaderStats();
+            if (currentUser === STAFF_USER) {
+                if (!document.getElementById("view-stats").classList.contains("hidden")) renderStats();
+            } else if (currentUser && players.some(p => p.fullname === currentUser)) {
+                const profileVisible = !document.getElementById("view-profile").classList.contains("hidden");
+                const killVisible = !document.getElementById("view-kill").classList.contains("hidden");
+                if (profileVisible) renderProfile();
+                if (killVisible) renderKillTargets();
+            } else if (currentUser) {
+                currentUser = null;
+                saveLocalSession();
+                goToView(1);
+            }
+            applyingRemoteState = false;
+        }
+
+        async function initializeSharedState() {
+            try {
+                const snapshot = await stateRef.once("value");
+                if (!snapshot.exists()) {
+                    await stateRef.transaction(current => current || {
+                        players: defaultPlayers,
+                        killHistory: []
+                    });
                 }
-                updateHeaderStats();
-                if (currentUser === STAFF_USER) renderStats();
-                else if (currentUser) renderProfile();
-            });
-
-            // ฟังการเปลี่ยนแปลงประวัติการ Kill
-            db.ref('killHistory').on('value', (snapshot) => {
-                const data = snapshot.val();
-                killHistory = data ? (Array.isArray(data) ? data : Object.values(data)) : [];
-                if (currentUser === STAFF_USER) renderStats();
-            });
+                stateRef.on("value", snapshot => {
+                    applyState(snapshot.val());
+                    stateReady = true;
+                    if (currentUser === STAFF_USER) goToView(4);
+                    else if (currentUser) goToView(2);
+                    else goToView(1);
+                }, error => {
+                    alert("เชื่อมต่อฐานข้อมูลไม่ได้: " + error.message);
+                });
+            } catch (error) {
+                alert("เริ่มต้นฐานข้อมูลไม่สำเร็จ กรุณาตรวจสอบการตั้งค่า Firebase: " + error.message);
+            }
         }
 
-        // บันทึกข้อมูลขึ้น Firebase
-        function saveState() {
-            db.ref('players').set(window.players);
-            db.ref('killHistory').set(killHistory);
-            localStorage.setItem('killer_current_user_v7', currentUser || '');
-            localStorage.setItem('killer_recent_logins_v7', JSON.stringify(recentLogins));
+        async function updateSharedState(mutator) {
+            if (!stateReady) throw new Error("ระบบกำลังเชื่อมต่อฐานข้อมูล กรุณารอสักครู่");
+            const result = await stateRef.transaction(current => {
+                const state = cleanState(current);
+                const next = mutator(state);
+                return next === undefined ? state : next;
+            });
+            if (!result.committed) throw new Error("บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่");
+            return cleanState(result.snapshot.val());
         }
-
-        loadState();
 
         function addRecentLogin(name) {
             if (name === STAFF_USER) return;
             recentLogins = recentLogins.filter(item => item !== name);
             recentLogins.unshift(name);
             if (recentLogins.length > 5) recentLogins.pop();
-            saveState();
+            saveLocalSession();
         }
 
         function renderRecentLogins() {
-            const box = document.getElementById('recent-logins-box');
-            const list = document.getElementById('recent-logins-list');
-            
-            if (recentLogins.length === 0) {
-                box.classList.add('hidden');
-                return;
-            }
-
-            box.classList.remove('hidden');
+            const box = document.getElementById("recent-logins-box");
+            const list = document.getElementById("recent-logins-list");
+            if (!recentLogins.length) { box.classList.add("hidden"); return; }
+            box.classList.remove("hidden");
             list.innerHTML = "";
             recentLogins.forEach(name => {
-                const btn = document.createElement('button');
+                const btn = document.createElement("button");
                 btn.type = "button";
-                btn.className = "bg-slate-800 hover:bg-emerald-900/50 border border-slate-700 hover:border-emerald-500/50 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5";
-                btn.innerHTML = `<span>👤</span> <span>${name}</span>`;
+                btn.className = "bg-slate-800 hover:bg-emerald-900/50 border border-slate-700 hover:border-emerald-500/50 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition";
+                btn.textContent = "👤 " + name;
                 btn.onclick = () => {
-                    document.getElementById('login-fullname').value = name;
-                    document.getElementById('login-pin').value = "";
-                    document.getElementById('login-pin').focus();
+                    document.getElementById("login-fullname").value = name;
+                    document.getElementById("login-pin").value = "";
+                    document.getElementById("login-pin").focus();
                 };
                 list.appendChild(btn);
             });
@@ -327,373 +365,332 @@
 
         function clearRecentLogins() {
             recentLogins = [];
-            saveState();
+            saveLocalSession();
             renderRecentLogins();
         }
 
         function updateNavigationUI() {
-            const navbar = document.getElementById('bottom-navbar');
-            const btnProfile = document.getElementById('nav-btn-profile');
-            const btnKill = document.getElementById('nav-btn-kill');
-            const btnStats = document.getElementById('nav-btn-stats');
-
-            if (!currentUser) {
-                navbar.classList.add('hidden');
-                return;
-            }
-
-            navbar.classList.remove('hidden');
-
+            const navbar = document.getElementById("bottom-navbar");
+            const btnProfile = document.getElementById("nav-btn-profile");
+            const btnKill = document.getElementById("nav-btn-kill");
+            const btnStats = document.getElementById("nav-btn-stats");
+            if (!currentUser) { navbar.classList.add("hidden"); return; }
+            navbar.classList.remove("hidden");
             if (currentUser === STAFF_USER) {
-                btnProfile.classList.add('hidden');
-                btnKill.classList.add('hidden');
-                btnStats.classList.remove('hidden');
-                btnStats.classList.add('flex');
+                btnProfile.classList.add("hidden");
+                btnKill.classList.add("hidden");
+                btnStats.classList.remove("hidden");
+                btnStats.classList.add("flex");
             } else {
-                btnProfile.classList.remove('hidden');
-                btnKill.classList.remove('hidden');
-                btnStats.classList.add('hidden');
-                btnStats.classList.remove('flex');
+                btnProfile.classList.remove("hidden");
+                btnKill.classList.remove("hidden");
+                btnStats.classList.add("hidden");
+                btnStats.classList.remove("flex");
             }
         }
 
         function goToView(viewNum) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll(".view-section").forEach(el => el.classList.add("hidden"));
             updateNavigationUI();
-            
             if (viewNum === 1) {
-                document.getElementById('view-login').classList.remove('hidden');
+                document.getElementById("view-login").classList.remove("hidden");
                 renderRecentLogins();
-            }
-            if (viewNum === 2) {
-                if (!currentUser) { goToView(1); return; }
-                if (currentUser === STAFF_USER) { goToView(4); return; }
-                document.getElementById('view-profile').classList.remove('hidden');
+            } else if (viewNum === 2) {
+                if (!currentUser) return goToView(1);
+                if (currentUser === STAFF_USER) return goToView(4);
+                document.getElementById("view-profile").classList.remove("hidden");
                 renderProfile();
-            }
-            if (viewNum === 3) {
-                if (!currentUser || currentUser === STAFF_USER) { goToView(1); return; }
-                const user = window.players.find(p => p.fullname === currentUser);
-                if (!user || !user.alive) { alert("คุณเสียชีวิตแล้ว ไม่สามารถเข้าหน้าสังหารได้"); goToView(2); return; }
-                document.getElementById('view-kill').classList.remove('hidden');
+            } else if (viewNum === 3) {
+                if (!currentUser || currentUser === STAFF_USER) return goToView(1);
+                const user = players.find(p => p.fullname === currentUser);
+                if (!user || !user.alive) { alert("คุณเสียชีวิตแล้ว ไม่สามารถเข้าหน้าสังหารได้"); return goToView(2); }
+                document.getElementById("view-kill").classList.remove("hidden");
                 renderKillTargets();
-            }
-            if (viewNum === 4) {
+            } else if (viewNum === 4) {
                 if (currentUser !== STAFF_USER) {
                     alert("ไม่มีสิทธิ์เข้าถึงหน้าบอร์ดสตาฟ");
-                    goToView(currentUser ? 2 : 1);
-                    return;
+                    return goToView(currentUser ? 2 : 1);
                 }
-                document.getElementById('view-stats').classList.remove('hidden');
+                document.getElementById("view-stats").classList.remove("hidden");
                 renderStats();
             }
             updateHeaderStats();
         }
 
         function updateHeaderStats() {
-            const loggedInPlayers = window.players.filter(p => p.pin !== null);
-            const aliveCount = loggedInPlayers.filter(p => p.alive).length;
-            const deadCount = loggedInPlayers.filter(p => !p.alive).length;
-            document.getElementById('stat-alive').innerText = aliveCount;
-            document.getElementById('stat-dead').innerText = deadCount;
+            const aliveCount = players.filter(p => p.pin !== null && p.pin !== undefined && p.alive).length;
+            const deadCount = players.filter(p => p.pin !== null && p.pin !== undefined && !p.alive).length;
+            document.getElementById("stat-alive").innerText = aliveCount;
+            document.getElementById("stat-dead").innerText = deadCount;
         }
 
-        document.getElementById('form-login').addEventListener('submit', function(e) {
+        document.getElementById("form-login").addEventListener("submit", async function(e) {
             e.preventDefault();
-            const fullnameInput = document.getElementById('login-fullname').value.trim();
-            const pinInput = document.getElementById('login-pin').value.trim();
+            const fullnameInput = document.getElementById("login-fullname").value.trim().replace(/\s+/g, " ");
+            const pinInput = document.getElementById("login-pin").value.trim();
 
             if (fullnameInput === STAFF_USER) {
                 if (pinInput === STAFF_PASS) {
                     currentUser = STAFF_USER;
-                    saveState();
+                    saveLocalSession();
                     goToView(4);
-                } else {
-                    alert("รหัสผ่านสตาฟไม่ถูกต้อง!");
-                }
+                } else alert("รหัสผ่านสตาฟไม่ถูกต้อง!");
                 return;
             }
 
-            if (pinInput.length !== 6) {
-                alert("กรุณากรอกรหัสผ่านให้ครบ 6 หลัก");
+            if (!/^\d{6}$/.test(pinInput)) {
+                alert("กรุณาตั้งหรือกรอกรหัส PIN ตัวเลข 6 หลัก");
                 return;
             }
 
-            let player = window.players.find(p => p.fullname === fullnameInput);
-            if (!player) {
-                alert("ไม่พบชื่อนี้ในรายชื่อผู้เข้าร่วม กรุณาตรวจสอบตัวสะกดหรือติดต่อสตาฟ");
-                return;
-            } else {
-                if (player.pin === null) {
-                    if (!confirm(`ยืนยันการตั้งรหัส "${pinInput}" เป็นรหัสประจำตัวถาวรของคุณใช่หรือไม่?`)) return;
-                    player.pin = pinInput;
-                } else if (player.pin !== pinInput) {
-                    alert("รหัสผ่าน 6 หลักไม่ถูกต้อง! (รหัสนี้ถูกล็อกไว้แล้ว)");
-                    return;
-                }
+            try {
+                let outcome = "";
+                await updateSharedState(state => {
+                    const player = state.players.find(p => p.fullname.trim().replace(/\s+/g, " ") === fullnameInput);
+                    if (!player) { outcome = "not-found"; return state; }
+                    if (player.pin === null || player.pin === undefined || player.pin === "") {
+                        player.pin = pinInput; // ผู้เล่นเป็นผู้ตั้ง PIN เองในการเข้าสู่ระบบครั้งแรก
+                        outcome = "created";
+                    } else if (String(player.pin) !== pinInput) outcome = "wrong-pin";
+                    else outcome = "ok";
+                    return state;
+                });
+                if (outcome === "not-found") return alert("ไม่พบชื่อ-นามสกุลนี้ในรายชื่อที่สตาฟลงทะเบียนไว้ กรุณาตรวจสอบการสะกด");
+                if (outcome === "wrong-pin") return alert("PIN ไม่ถูกต้อง หากลืมรหัสโปรดติดต่อสตาฟ");
+                currentUser = fullnameInput;
+                addRecentLogin(fullnameInput);
+                saveLocalSession();
+                goToView(2);
+            } catch (error) {
+                alert(error.message || "เข้าสู่ระบบไม่สำเร็จ");
             }
-
-            currentUser = player.fullname;
-            addRecentLogin(player.fullname);
-            saveState();
-            goToView(2);
         });
 
         function renderProfile() {
-            const user = window.players.find(p => p.fullname === currentUser);
+            const user = players.find(p => p.fullname === currentUser);
             if (!user) return;
-
-            document.getElementById('profile-nickname').innerText = `${user.nickname} (${user.fullname})`;
-            document.getElementById('profile-dept').innerText = `ภาควิชา: ${user.dept}`;
-            document.getElementById('profile-pin').innerText = user.pin;
-            document.getElementById('profile-avatar').innerText = user.nickname.charAt(0);
-
-            const badge = document.getElementById('profile-status-badge');
-            const killBtnContainer = document.getElementById('kill-btn-container');
-            const killedWarning = document.getElementById('killed-warning');
-
+            document.getElementById("profile-nickname").innerText = `${user.nickname} (${user.fullname})`;
+            document.getElementById("profile-dept").innerText = `ภาควิชา: ${user.dept}`;
+            document.getElementById("profile-pin").innerText = user.pin || "ตั้งแล้ว";
+            document.getElementById("profile-avatar").innerText = (user.nickname || "?").charAt(0);
+            const badge = document.getElementById("profile-status-badge");
+            const killBtnContainer = document.getElementById("kill-btn-container");
+            const killedWarning = document.getElementById("killed-warning");
             if (user.alive) {
                 badge.className = "absolute top-3 right-3 bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/20";
                 badge.innerText = "รอดชีวิต";
-                killBtnContainer.classList.remove('hidden');
-                killedWarning.classList.add('hidden');
+                killBtnContainer.classList.remove("hidden");
+                killedWarning.classList.add("hidden");
             } else {
                 badge.className = "absolute top-3 right-3 bg-rose-500/10 text-rose-400 text-[10px] px-2 py-0.5 rounded-full border border-rose-500/20";
                 badge.innerText = "โดนKill";
-                killBtnContainer.classList.add('hidden');
-                killedWarning.classList.remove('hidden');
+                killBtnContainer.classList.add("hidden");
+                killedWarning.classList.remove("hidden");
             }
-
-            const board = document.getElementById('player-mission-board');
+            const board = document.getElementById("player-mission-board");
             board.innerHTML = "";
-            window.players.forEach(p => {
-                if (p.pin === null) return;
+            players.forEach(p => {
+                if (p.pin === null || p.pin === undefined) return;
                 const isSelf = p.fullname === user.fullname;
                 const missionText = isSelf ? "🔒 ภารกิจลับ - ซ่อนอยู่" : `ภารกิจ: ${p.mission}`;
                 const statusClass = p.alive ? "border-slate-700 bg-slate-900/40 text-slate-300" : "border-rose-900/40 bg-rose-950/20 text-rose-400 line-through";
-                
-                board.innerHTML += `
-                    <div class="p-2.5 rounded-lg border ${statusClass} flex justify-between items-center text-xs">
-                        <div>
-                            <span class="font-bold text-white">${p.nickname} (${p.dept})</span>
-                            <span class="block text-[10px] text-slate-400">${p.alive ? missionText : 'เสียชีวิตแล้ว'}</span>
-                        </div>
-                        <span class="text-[10px] px-2 py-0.5 rounded ${p.alive ? 'bg-emerald-900/40 text-emerald-300' : 'bg-rose-900/40 text-rose-300'}">
-                            ${p.alive ? 'รอด' : 'ตาย'}
-                        </span>
-                    </div>
-                `;
+                const item = document.createElement("div");
+                item.className = `p-2.5 rounded-lg border ${statusClass} flex justify-between items-center text-xs`;
+                const left = document.createElement("div");
+                const name = document.createElement("span");
+                name.className = "font-bold text-white";
+                name.textContent = `${p.nickname} (${p.dept})`;
+                const mission = document.createElement("span");
+                mission.className = "block text-[10px] text-slate-400";
+                mission.textContent = p.alive ? missionText : "เสียชีวิตแล้ว";
+                left.append(name, mission);
+                const status = document.createElement("span");
+                status.className = `text-[10px] px-2 py-0.5 rounded ${p.alive ? "bg-emerald-900/40 text-emerald-300" : "bg-rose-900/40 text-rose-300"}`;
+                status.textContent = p.alive ? "รอด" : "ตาย";
+                item.append(left, status);
+                board.appendChild(item);
             });
         }
 
         function renderKillTargets() {
-            const select = document.getElementById('kill-target-select');
+            const select = document.getElementById("kill-target-select");
             select.innerHTML = '<option value="">-- เลือกผู้เล่นที่ยังมีชีวิต --</option>';
-            document.getElementById('kill-mission-input').value = "";
-            
-            window.players.forEach(p => {
-                if (p.alive && p.fullname !== currentUser && p.pin !== null) {
-                    select.innerHTML += `<option value="${p.fullname}">${p.nickname} (${p.dept} - ${p.fullname})</option>`;
+            document.getElementById("kill-mission-input").value = "";
+            players.forEach(p => {
+                if (p.alive && p.fullname !== currentUser && p.pin !== null && p.pin !== undefined) {
+                    const option = document.createElement("option");
+                    option.value = p.fullname;
+                    option.textContent = `${p.nickname} (${p.dept} - ${p.fullname})`;
+                    select.appendChild(option);
                 }
             });
         }
 
         function onSelectKillTarget() {
-            const targetName = document.getElementById('kill-target-select').value;
-            const missionInput = document.getElementById('kill-mission-input');
-            
-            if (!targetName) {
-                missionInput.value = "";
-                return;
-            }
-
-            const target = window.players.find(p => p.fullname === targetName);
-            if (target) {
-                missionInput.value = target.mission || "ไม่ระบุภารกิจ";
-            }
+            const targetName = document.getElementById("kill-target-select").value;
+            const target = players.find(p => p.fullname === targetName);
+            document.getElementById("kill-mission-input").value = target ? (target.mission || "ไม่ระบุภารกิจ") : "";
         }
 
-        document.getElementById('form-kill').addEventListener('submit', function(e) {
+        document.getElementById("form-kill").addEventListener("submit", async function(e) {
             e.preventDefault();
-            const targetName = document.getElementById('kill-target-select').value;
-            const targetPin = document.getElementById('kill-target-pin').value.trim();
-
-            if (!targetName) { alert("กรุณาเลือกเป้าหมาย"); return; }
-
-            const target = window.players.find(p => p.fullname === targetName);
-            const hunter = window.players.find(p => p.fullname === currentUser);
-
-            if (!target || !target.alive) { alert("เป้าหมายนี้ไม่อยู่ในระบบหรือโดนKillไปแล้ว"); return; }
-            if (target.pin !== targetPin) { alert("รหัสผ่าน 6 หลักของเป้าหมายไม่ถูกต้อง!"); return; }
-
-            const completedMission = target.mission;
-
-            target.alive = false;
-            target.killedBy = hunter.fullname;
-            target.killMission = completedMission;
-            hunter.kills += 1;
-
-            killHistory.push({
-                hunter: hunter.nickname,
-                victim: target.nickname,
-                mission: completedMission,
-                time: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })
-            });
-
-            saveState();
-            alert(`🎯 สังหาร ${target.nickname} ด้วยภารกิจ "${completedMission}" สำเร็จเรียบร้อย!`);
-            document.getElementById('form-kill').reset();
-            goToView(2);
+            const targetName = document.getElementById("kill-target-select").value;
+            const targetPin = document.getElementById("kill-target-pin").value.trim();
+            if (!targetName) return alert("กรุณาเลือกเป้าหมาย");
+            try {
+                let outcome = "";
+                let victimNickname = "";
+                let completedMission = "";
+                await updateSharedState(state => {
+                    const target = state.players.find(p => p.fullname === targetName);
+                    const hunter = state.players.find(p => p.fullname === currentUser);
+                    if (!hunter || !hunter.alive) { outcome = "hunter-dead"; return state; }
+                    if (!target || !target.alive) { outcome = "target-dead"; return state; }
+                    if (String(target.pin) !== targetPin) { outcome = "wrong-pin"; return state; }
+                    target.alive = false;
+                    target.killedBy = hunter.fullname;
+                    completedMission = target.mission || "";
+                    target.killMission = completedMission;
+                    hunter.kills = (hunter.kills || 0) + 1;
+                    victimNickname = target.nickname;
+                    state.killHistory.push({
+                        hunter: hunter.nickname,
+                        victim: target.nickname,
+                        mission: completedMission,
+                        time: new Date().toLocaleString("th-TH")
+                    });
+                    outcome = "success";
+                    return state;
+                });
+                if (outcome !== "success") {
+                    const messages = {
+                        "hunter-dead": "คุณถูกสังหารแล้ว ไม่สามารถทำรายการนี้ได้",
+                        "target-dead": "เป้าหมายนี้ไม่อยู่ในระบบหรือถูกสังหารไปแล้ว",
+                        "wrong-pin": "รหัส PIN ของเป้าหมายไม่ถูกต้อง"
+                    };
+                    return alert(messages[outcome] || "ทำรายการไม่สำเร็จ");
+                }
+                alert(`🎯 สังหาร ${victimNickname} ด้วยภารกิจ "${completedMission}" สำเร็จ!`);
+                document.getElementById("form-kill").reset();
+                goToView(2);
+            } catch (error) {
+                alert(error.message || "บันทึกผล Kill ไม่สำเร็จ");
+            }
         });
 
         function renderStats() {
-            const lbList = document.getElementById('leaderboard-list');
+            const lbList = document.getElementById("leaderboard-list");
             lbList.innerHTML = "";
-            const sorted = [...window.players].filter(p => p.pin !== null).sort((a,b) => b.kills - a.kills);
-            if (sorted.length === 0) {
-                lbList.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">ยังไม่มีผู้เล่นที่ล็อกอินเข้าสู่เกม</p>';
-            } else {
-                sorted.forEach((p, idx) => {
-                    lbList.innerHTML += `
-                        <div class="flex justify-between items-center bg-slate-800/60 p-2 rounded border border-slate-700/50">
-                            <span>#${idx+1} ${p.nickname} (${p.dept}) <span class="text-[10px] text-slate-400">[${p.alive ? 'รอด' : 'ตาย'}]</span></span>
-                            <span class="font-bold text-emerald-400">${p.kills} ฆ่า</span>
-                        </div>
-                    `;
-                });
-            }
-
-            const histList = document.getElementById('kill-history-list');
+            const sorted = players.filter(p => p.pin !== null && p.pin !== undefined).sort((a,b) => (b.kills || 0) - (a.kills || 0));
+            if (!sorted.length) lbList.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">ยังไม่มีผู้เล่นที่ล็อกอินเข้าสู่เกม</p>';
+            else sorted.forEach((p, idx) => {
+                const row = document.createElement("div");
+                row.className = "flex justify-between items-center bg-slate-800/60 p-2 rounded border border-slate-700/50";
+                row.textContent = `#${idx+1} ${p.nickname} (${p.dept}) [${p.alive ? "รอด" : "ตาย"}] — ${p.kills || 0} ฆ่า`;
+                lbList.appendChild(row);
+            });
+            const histList = document.getElementById("kill-history-list");
             histList.innerHTML = "";
-            if (killHistory.length === 0) {
-                histList.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">ยังไม่มีประวัติการสังหาร</p>';
-            } else {
-                killHistory.slice().reverse().forEach(h => {
-                    histList.innerHTML += `
-                        <div class="bg-slate-800/40 p-2 rounded border border-slate-700/40 text-xs">
-                            <span class="text-rose-400 font-bold">${h.hunter}</span> จัดการ <span class="text-slate-300 font-bold">${h.victim}</span>
-                            <div class="text-[10px] text-slate-400 mt-0.5">ภารกิจ: ${h.mission} (${h.time})</div>
-                        </div>
-                    `;
+            if (!killHistory.length) histList.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">ยังไม่มีประวัติการสังหาร</p>';
+            else killHistory.slice().reverse().forEach(h => {
+                const row = document.createElement("div");
+                row.className = "bg-slate-800/40 p-2 rounded border border-slate-700/40 text-xs";
+                row.textContent = `${h.hunter} จัดการ ${h.victim} — ภารกิจ: ${h.mission} (${h.time})`;
+                histList.appendChild(row);
+            });
+            document.getElementById("admin-panel").classList.toggle("hidden", currentUser !== STAFF_USER);
+        }
+
+        async function importPlayersData() {
+            const raw = document.getElementById("admin-import-data").value.trim();
+            if (!raw) return alert("กรุณากรอกข้อมูลรายชื่อและภารกิจ");
+            let added = 0, updated = 0, invalid = 0;
+            try {
+                await updateSharedState(state => {
+                    raw.split("\n").forEach(line => {
+                        const parts = line.trim().split(/\s+/);
+                        if (parts.length < 4) { invalid++; return; }
+                        const fullname = `${parts[0]} ${parts[1]}`;
+                        const nickname = parts[2];
+                        const dept = parts[3];
+                        const customMission = parts.length >= 5 ? parts.slice(4).join(" ") : "ถ่ายรูปคู่กัน";
+                        const existing = state.players.find(p => p.fullname === fullname);
+                        if (!existing) {
+                            state.players.push({
+                                fullname, nickname, dept, pin: null, alive: true,
+                                kills: 0, mission: customMission, killedBy: null, killMission: null
+                            });
+                            added++;
+                        } else {
+                            existing.nickname = nickname;
+                            existing.dept = dept;
+                            existing.mission = customMission;
+                            // การอัปเดตรายชื่อจะไม่ล้าง PIN หรือสถานะเดิมของผู้เล่น
+                            updated++;
+                        }
+                    });
+                    return state;
                 });
-            }
-
-            const adminPanel = document.getElementById('admin-panel');
-            if (currentUser === STAFF_USER) {
-                adminPanel.classList.remove('hidden');
-            } else {
-                adminPanel.classList.add('hidden');
-            }
-        }
-
-        // นำเข้ารายชื่อ (บังคับ PIN เป็น null เสมอเพื่อให้ผู้เล่นตั้งเอง)
-        function importPlayersData() {
-            const raw = document.getElementById('admin-import-data').value.trim();
-            if (!raw) { alert("กรุณากรอกข้อมูลรายชื่อและภารกิจ"); return; }
-            
-            const lines = raw.split('\n');
-            let added = 0;
-            let updated = 0;
-
-            lines.forEach(line => {
-                const parts = line.trim().split(/\s+/);
-                if (parts.length >= 4) {
-                    const fullname = `${parts[0]} ${parts[1]}`;
-                    const nickname = parts[2];
-                    const dept = parts[3];
-                    const customMission = parts.length >= 5 ? parts.slice(4).join(' ') : "ถ่ายรูปคู่กัน";
-
-                    const existingPlayer = window.players.find(p => p.fullname === fullname);
-                    if (!existingPlayer) {
-                        window.players.push({
-                            fullname: fullname,
-                            nickname: nickname,
-                            dept: dept,
-                            pin: null, // บังคับเป็น null เสมอ เพื่อให้ผู้เล่นตั้งรหัสเองตอนล็อกอินครั้งแรก
-                            alive: true,
-                            kills: 0,
-                            mission: customMission,
-                            killedBy: null,
-                            killMission: null
-                        });
-                        added++;
-                    } else {
-                        // อัปเดตเฉพาะชื่อเล่น ภาค และภารกิจ โดยไม่ไปแตะต้อง PIN และสถานะชีวิตเดิม
-                        existingPlayer.nickname = nickname;
-                        existingPlayer.dept = dept;
-                        existingPlayer.mission = customMission;
-                        updated++;
-                    }
-                }
-            });
-
-            saveState();
-            alert(`บันทึกสำเร็จ! (เพิ่มใหม่ ${added} คน / อัปเดตข้อมูล ${updated} คน)`);
-            document.getElementById('admin-import-data').value = "";
-            renderStats();
-        }
-
-        function adminResetAllPins() {
-            if (confirm("ต้องการรีเซ็ตรหัส PIN ของผู้เล่นทุกคนใช่หรือไม่?")) {
-                window.players.forEach(p => p.pin = null);
-                saveState();
-                alert("รีเซ็ตรหัสทั้งหมดเรียบร้อย");
-                updateHeaderStats();
+                alert(`บันทึกข้อมูลลงฐานข้อมูลกลางแล้ว\nเพิ่มใหม่ ${added} คน / อัปเดต ${updated} คน${invalid ? ` / ข้ามข้อมูลไม่ครบ ${invalid} บรรทัด` : ""}\nผู้เล่นทุกคนต้องล็อกอินและตั้ง PIN ด้วยตนเอง`);
+                document.getElementById("admin-import-data").value = "";
                 renderStats();
-            }
+            } catch (error) { alert(error.message || "นำเข้ารายชื่อไม่สำเร็จ"); }
         }
 
-        function adminForceAllLogin() {
-            window.players.forEach(p => {
-                if (p.pin === null) p.pin = "111111";
-            });
-            saveState();
-            alert("จำลองตั้ง PIN '111111' ให้ผู้เล่นที่ยังไม่ล็อกอินเรียบร้อย");
-            updateHeaderStats();
-            renderStats();
+        async function adminResetAllPins() {
+            if (!confirm("ต้องการรีเซ็ตรหัส PIN ของผู้เล่นทุกคนใช่หรือไม่?")) return;
+            try {
+                await updateSharedState(state => {
+                    state.players.forEach(p => p.pin = null);
+                    return state;
+                });
+                alert("รีเซ็ตรหัส PIN แล้ว ผู้เล่นต้องตั้งรหัสใหม่ด้วยตนเอง");
+            } catch (error) { alert(error.message); }
+        }
+
+        async function adminForceAllLogin() {
+            alert("ปิดฟังก์ชันจำลองล็อกอินแล้ว เพื่อให้ผู้เล่นทุกคนตั้ง PIN ด้วยตนเอง");
         }
 
         function openRestartModal() {
-            document.getElementById('restart-confirm-pin').value = "";
-            document.getElementById('restart-modal').classList.remove('hidden');
-            document.getElementById('restart-confirm-pin').focus();
+            document.getElementById("restart-confirm-pin").value = "";
+            document.getElementById("restart-modal").classList.remove("hidden");
+            document.getElementById("restart-confirm-pin").focus();
         }
+        function closeRestartModal() { document.getElementById("restart-modal").classList.add("hidden"); }
 
-        function closeRestartModal() {
-            document.getElementById('restart-modal').classList.add('hidden');
-        }
-
-        function confirmRestartAll() {
-            const inputPass = document.getElementById('restart-confirm-pin').value.trim();
-            if (inputPass !== STAFF_PASS) {
-                alert("❌ รหัสผ่านสตาฟไม่ถูกต้อง! ยกเลิกการรีสตาร์ท");
-                return;
-            }
-
-            window.players = [];
-            killHistory = [];
-            saveState();
-
-            closeRestartModal();
-            updateHeaderStats();
-            renderStats();
-            alert("✅ รีสตาร์ทระบบทั้งหมดเรียบร้อยแล้ว รายชื่อถูกเคลียร์เกลี้ยง พร้อมนำเข้ารายชื่อใหม่!");
+        async function confirmRestartAll() {
+            const inputPass = document.getElementById("restart-confirm-pin").value.trim();
+            if (inputPass !== STAFF_PASS) return alert("❌ รหัสผ่านสตาฟไม่ถูกต้อง! ยกเลิกการรีสตาร์ท");
+            if (!confirm("ยืนยันล้างสถานะเกมและประวัติ Kill ทั้งหมดหรือไม่?")) return;
+            try {
+                await updateSharedState(state => {
+                    state.players.forEach(p => {
+                        p.pin = null; p.alive = true; p.kills = 0;
+                        p.killedBy = null; p.killMission = null;
+                    });
+                    state.killHistory = [];
+                    return state;
+                });
+                closeRestartModal();
+                alert("รีสตาร์ทเกมบนฐานข้อมูลกลางเรียบร้อยแล้ว");
+            } catch (error) { alert(error.message); }
         }
 
         function logout() {
             currentUser = null;
-            saveState();
+            saveLocalSession();
             goToView(1);
         }
 
-        if (currentUser === STAFF_USER) {
-            goToView(4);
-        } else if (currentUser) {
-            goToView(2);
-        } else {
-            goToView(1);
-        }
-        updateHeaderStats();
+        // เริ่มต้นรอข้อมูลจาก Firebase ก่อนให้ผู้เล่นใช้งาน
+        document.getElementById("form-login").querySelector("button[type=submit]").disabled = true;
+        document.getElementById("form-login").querySelector("button[type=submit]").textContent = "กำลังเชื่อมต่อฐานข้อมูล...";
+        initializeSharedState().then(() => {
+            const loginButton = document.getElementById("form-login").querySelector("button[type=submit]");
+            loginButton.disabled = false;
+            loginButton.textContent = "ล็อกอินเข้าสู่ระบบ";
+        });
     </script>
 </body>
 </html>
