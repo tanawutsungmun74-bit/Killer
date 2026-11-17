@@ -6,6 +6,11 @@
     <title>Killer Game - สานสัมพันธ์ วิศวะ 2 วิทยาเขต</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase App & Realtime Database SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <style>
         body { font-family: 'Prompt', sans-serif; }
     </style>
@@ -33,7 +38,7 @@
             <!-- ================= หน้า 1: ล็อกอิน ================= -->
             <section id="view-login" class="view-section space-y-5">
                 
-                <!-- 4. รูปภาพหน้าแรก (เปลี่ยนลิงก์ src เป็นรูปโลโก้ค่ายของคุณได้ตรงนี้) -->
+                <!-- รูปภาพหน้าแรก -->
                 <div class="relative rounded-2xl overflow-hidden border border-slate-700 shadow-lg bg-slate-900">
                     <img id="home-banner-img" 
                          src="https://i.postimg.cc/3J2SP8TN/12312414.jpg" 
@@ -60,14 +65,14 @@
                     </button>
                 </form>
 
-                <!-- 1. การล็อกอินล่าสุด (Recent Logins) -->
+                <!-- การล็อกอินล่าสุด (Recent Logins) -->
                 <div id="recent-logins-box" class="hidden bg-slate-900/40 p-3.5 rounded-xl border border-slate-700/80 space-y-2">
                     <div class="flex justify-between items-center">
                         <p class="text-xs text-slate-400 font-medium">🕒 การล็อกอินล่าสุด (กดเพื่อใส่ชื่ออัตโนมัติ):</p>
                         <button type="button" onclick="clearRecentLogins()" class="text-[10px] text-slate-500 hover:text-rose-400">ล้างประวัติ</button>
                     </div>
                     <div id="recent-logins-list" class="flex flex-wrap gap-1.5">
-                        <!-- ปุ่มรายชื่อล็อกอินล่าสุดจะแสดงตรงนี้ -->
+                        <!-- ปุ่มรายชื่อล็อกอินล่าสุด -->
                     </div>
                 </div>
 
@@ -123,9 +128,8 @@
                         </select>
                     </div>
 
-                    <!-- 3. แสดงภารกิจเฉพาะตัวของเป้าหมายที่สตาฟกำหนดไว้ -->
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้ </label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">2. ภารกิจสังหารของเป้าหมายคนนี้</label>
                         <input type="text" id="kill-mission-input" readonly required placeholder="กรุณาเลือกเป้าหมายด้านบนเพื่อดูภารกิจ" class="w-full bg-slate-900/90 border border-amber-500/40 text-amber-300 font-medium rounded-lg px-3 py-2.5 text-sm focus:outline-none cursor-not-allowed">
                     </div>
 
@@ -164,7 +168,6 @@
                 <div id="admin-panel" class="hidden bg-slate-900 p-3.5 rounded-xl border border-emerald-500/40 space-y-3">
                     <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">⚡ Staff Control Panel (smoeng69)</h3>
                     
-                    <!-- 3. ช่องนำเข้ารายชื่อพร้อมภารกิจของแต่ละคน -->
                     <div>
                         <label class="block text-[11px] font-medium text-slate-300 mb-1">นำเข้ารายชื่อ & กำหนดภารกิจรายคน</label>
                         <p class="text-[10px] text-slate-400 mb-1.5">รูปแบบ: <span class="text-amber-300">ชื่อ นามสกุล ชื่อเล่น ภาควิชา ภารกิจ</span> (1 คนต่อ 1 บรรทัด)</p>
@@ -176,14 +179,12 @@
                         </button>
                     </div>
 
-                    <!-- จัดการรหัสและรีสตาร์ทระบบ -->
                     <div class="pt-2 border-t border-slate-800 space-y-2">
                         <div class="flex gap-2">
                             <button onclick="adminResetAllPins()" class="flex-1 bg-amber-700/50 hover:bg-amber-700/80 border border-amber-600/40 text-xs py-2 rounded-lg text-amber-200 transition">ปลดล็อกรหัส PIN ทุกคน</button>
                             <button onclick="adminForceAllLogin()" class="flex-1 bg-blue-700/50 hover:bg-blue-700/80 border border-blue-600/40 text-xs py-2 rounded-lg text-blue-200 transition">จำลองล็อกอินครบทุกคน</button>
                         </div>
                         
-                        <!-- 2. ปุ่มรีสตาร์ททุกอย่าง (ต้องใส่รหัสยืนยัน) -->
                         <button onclick="openRestartModal()" class="w-full bg-rose-900/70 hover:bg-rose-800 border border-rose-600/50 text-rose-200 font-semibold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5">
                             <span>⚠️ รีสตาร์ทระบบทั้งหมด (ล้างข้อมูลเริ่มเกมใหม่)</span>
                         </button>
@@ -219,7 +220,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-slate-300 mb-1">กรอกรหัสล็อกอินสตาฟเพื่อยืนยัน:</label>
-                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (0089)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
+                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (2569)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
                 </div>
                 <div class="flex gap-2">
                     <button type="button" onclick="closeRestartModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs py-2.5 rounded-lg transition">ยกเลิก</button>
@@ -230,12 +231,26 @@
 
     </div>
 
-    <!-- JavaScript ระบบทั้งหมด -->
+    <!-- JavaScript ระบบ Firebase Realtime Database -->
     <script>
+        // ตั้งค่า Firebase ตาม Project ของคุณ
+        const firebaseConfig = {
+            apiKey: "AIzaSyBwHipnMGrRlJi6xKMWFC9ce0PC5i2TY",
+            authDomain: "killer-game-kmutnb.firebaseapp.com",
+            projectId: "killer-game-kmutnb",
+            storageBucket: "killer-game-kmutnb.appspot.com",
+            messagingSenderId: "56198732",
+            appId: "1:56198732:web:f4bb06b2aacfa5b00016e9",
+            measurementId: "G-H8K0T850HK"
+        };
+
+        // เริ่มต้นเชื่อมต่อ Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         const STAFF_USER = "smoeng69";
         const STAFF_PASS = "2569";
 
-        // ฐานข้อมูลเริ่มต้น
         let defaultPlayers = [
             { fullname: "โยธา คนจน", nickname: "ธา", dept: "CE", pin: null, alive: true, kills: 0, mission: "ถ่ายรูปคู่กัน", killedBy: null, killMission: null },
             { fullname: "กานดา สิงขอน", nickname: "กาน", dept: "PRE", pin: null, alive: true, kills: 0, mission: "ชนหมัดกัน", killedBy: null, killMission: null },
@@ -243,44 +258,58 @@
             { fullname: "จิรภัทร แสงทอง", nickname: "จิร", dept: "EE", pin: null, alive: true, kills: 0, mission: "บอกความลับ 1 อย่าง", killedBy: null, killMission: null }
         ];
 
+        window.players = [];
         let killHistory = [];
         let recentLogins = [];
         let currentUser = null;
 
-        // โหลดข้อมูลจาก LocalStorage
+        // โหลดข้อมูลแบบ Realtime จาก Firebase
         function loadState() {
-            const savedPlayers = localStorage.getItem('killer_players_v4');
-            const savedHistory = localStorage.getItem('killer_history_v4');
-            const savedUser = localStorage.getItem('killer_current_user_v4');
-            const savedRecent = localStorage.getItem('killer_recent_logins_v4');
-
-            if (savedPlayers) window.players = JSON.parse(savedPlayers);
-            else window.players = JSON.parse(JSON.stringify(defaultPlayers));
-
-            if (savedHistory) killHistory = JSON.parse(savedHistory);
+            const savedUser = localStorage.getItem('killer_current_user_v5');
+            const savedRecent = localStorage.getItem('killer_recent_logins_v5');
             if (savedUser) currentUser = savedUser;
             if (savedRecent) recentLogins = JSON.parse(savedRecent);
+
+            // ฟังการเปลี่ยนแปลงข้อมูลผู้เล่น
+            db.ref('players').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    window.players = Array.isArray(data) ? data : Object.values(data);
+                } else {
+                    window.players = JSON.parse(JSON.stringify(defaultPlayers));
+                    db.ref('players').set(window.players);
+                }
+                updateHeaderStats();
+                if (currentUser === STAFF_USER) renderStats();
+                else if (currentUser) renderProfile();
+            });
+
+            // ฟังการเปลี่ยนแปลงประวัติการ Kill
+            db.ref('killHistory').on('value', (snapshot) => {
+                const data = snapshot.val();
+                killHistory = data ? (Array.isArray(data) ? data : Object.values(data)) : [];
+                if (currentUser === STAFF_USER) renderStats();
+            });
         }
 
+        // บันทึกข้อมูลขึ้น Firebase
         function saveState() {
-            localStorage.setItem('killer_players_v4', JSON.stringify(window.players));
-            localStorage.setItem('killer_history_v4', JSON.stringify(killHistory));
-            localStorage.setItem('killer_current_user_v4', currentUser || '');
-            localStorage.setItem('killer_recent_logins_v4', JSON.stringify(recentLogins));
+            db.ref('players').set(window.players);
+            db.ref('killHistory').set(killHistory);
+            localStorage.setItem('killer_current_user_v5', currentUser || '');
+            localStorage.setItem('killer_recent_logins_v5', JSON.stringify(recentLogins));
         }
 
         loadState();
 
-        // บันทึกประวัติการล็อกอินล่าสุด
         function addRecentLogin(name) {
-            if (name === STAFF_USER) return; // ไม่เก็บชื่อสตาฟในปุ่มลัดหน้าแรกเพื่อความปลอดภัย
+            if (name === STAFF_USER) return;
             recentLogins = recentLogins.filter(item => item !== name);
             recentLogins.unshift(name);
-            if (recentLogins.length > 5) recentLogins.pop(); // เก็บสูงสุด 5 ชื่อล่าสุด
+            if (recentLogins.length > 5) recentLogins.pop();
             saveState();
         }
 
-        // แสดงปุ่มการล็อกอินล่าสุดในหน้า 1
         function renderRecentLogins() {
             const box = document.getElementById('recent-logins-box');
             const list = document.getElementById('recent-logins-list');
@@ -300,7 +329,7 @@
                 btn.onclick = () => {
                     document.getElementById('login-fullname').value = name;
                     document.getElementById('login-pin').value = "";
-                    document.getElementById('login-pin').focus(); // โฟกัสไปที่ช่องรหัสเพื่อให้ผู้ใช้กรอกรหัสเอง
+                    document.getElementById('login-pin').focus();
                 };
                 list.appendChild(btn);
             });
@@ -312,7 +341,6 @@
             renderRecentLogins();
         }
 
-        // อัปเดตการแสดงผลปุ่มเมนูด้านล่างตามสิทธิ์ผู้ใช้
         function updateNavigationUI() {
             const navbar = document.getElementById('bottom-navbar');
             const btnProfile = document.getElementById('nav-btn-profile');
@@ -339,7 +367,6 @@
             }
         }
 
-        // ฟังก์ชันสลับหน้า
         function goToView(viewNum) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             updateNavigationUI();
@@ -373,7 +400,6 @@
             updateHeaderStats();
         }
 
-        // อัปเดตสถิติด้านบน (นับเฉพาะคนที่ตั้ง PIN ล็อกอินแล้ว)
         function updateHeaderStats() {
             const loggedInPlayers = window.players.filter(p => p.pin !== null);
             const aliveCount = loggedInPlayers.filter(p => p.alive).length;
@@ -382,13 +408,11 @@
             document.getElementById('stat-dead').innerText = deadCount;
         }
 
-        // ระบบล็อกอิน & ตั้งรหัส PIN 6 หลักถาวร
         document.getElementById('form-login').addEventListener('submit', function(e) {
             e.preventDefault();
             const fullnameInput = document.getElementById('login-fullname').value.trim();
             const pinInput = document.getElementById('login-pin').value.trim();
 
-            // ตรวจสอบสตาฟ smoeng69
             if (fullnameInput === STAFF_USER) {
                 if (pinInput === STAFF_PASS) {
                     currentUser = STAFF_USER;
@@ -412,7 +436,7 @@
             } else {
                 if (player.pin === null) {
                     if (!confirm(`ยืนยันการตั้งรหัส "${pinInput}" เป็นรหัสประจำตัวถาวรของคุณใช่หรือไม่?`)) return;
-                    player.pin = pinInput; // ล็อกรหัสครั้งแรกถาวร
+                    player.pin = pinInput;
                 } else if (player.pin !== pinInput) {
                     alert("รหัสผ่าน 6 หลักไม่ถูกต้อง! (รหัสนี้ถูกล็อกไว้แล้ว)");
                     return;
@@ -425,7 +449,6 @@
             goToView(2);
         });
 
-        // แสดงหน้าโปรไฟล์ & กระดานภารกิจ
         function renderProfile() {
             const user = window.players.find(p => p.fullname === currentUser);
             if (!user) return;
@@ -451,7 +474,6 @@
                 killedWarning.classList.remove('hidden');
             }
 
-            // เรนเดอร์กระดานภารกิจคนอื่น (ซ่อนภารกิจตัวเอง)
             const board = document.getElementById('player-mission-board');
             board.innerHTML = "";
             window.players.forEach(p => {
@@ -474,7 +496,6 @@
             });
         }
 
-        // หน้า Kill: ดึงรายชื่อคนที่ยังมีชีวิตและตั้ง PIN แล้วมาแสดง
         function renderKillTargets() {
             const select = document.getElementById('kill-target-select');
             select.innerHTML = '<option value="">-- เลือกผู้เล่นที่ยังมีชีวิต --</option>';
@@ -487,7 +508,6 @@
             });
         }
 
-        // เมื่อเลือกชื่อเป้าหมายใน Dropdown ให้ดึงภารกิจเฉพาะตัวของคนนั้นมาใส่ช่องภารกิจอัตโนมัติ
         function onSelectKillTarget() {
             const targetName = document.getElementById('kill-target-select').value;
             const missionInput = document.getElementById('kill-mission-input');
@@ -503,7 +523,6 @@
             }
         }
 
-        // ยืนยันการ Kill (2 ชั้น: ตรวจ PIN 6 หลักของเหยื่อ)
         document.getElementById('form-kill').addEventListener('submit', function(e) {
             e.preventDefault();
             const targetName = document.getElementById('kill-target-select').value;
@@ -519,7 +538,6 @@
 
             const completedMission = target.mission;
 
-            // ดำเนินการสังหารสำเร็จ
             target.alive = false;
             target.killedBy = hunter.fullname;
             target.killMission = completedMission;
@@ -538,7 +556,6 @@
             goToView(2);
         });
 
-        // หน้าสถิติ & บอร์ดสตาฟ (เฉพาะ smoeng69)
         function renderStats() {
             const lbList = document.getElementById('leaderboard-list');
             lbList.innerHTML = "";
@@ -579,7 +596,6 @@
             }
         }
 
-        // 3. ฟังก์ชันสตาฟ: นำเข้ารายชื่อพร้อมภารกิจของแต่ละคน
         function importPlayersData() {
             const raw = document.getElementById('admin-import-data').value.trim();
             if (!raw) { alert("กรุณากรอกข้อมูลรายชื่อและภารกิจ"); return; }
@@ -594,7 +610,6 @@
                     const fullname = `${parts[0]} ${parts[1]}`;
                     const nickname = parts[2];
                     const dept = parts[3];
-                    // ข้อความตั้งแต่คำที่ 5 เป็นต้นไปจะถูกรวมเป็น "ภารกิจ" ของคนนั้นๆ
                     const customMission = parts.length >= 5 ? parts.slice(4).join(' ') : "ถ่ายรูปคู่กัน";
 
                     const existingPlayer = window.players.find(p => p.fullname === fullname);
@@ -612,7 +627,6 @@
                         });
                         added++;
                     } else {
-                        // ถ้ามีชื่ออยู่แล้ว ให้อัปเดตชื่อเล่น ภาควิชา และภารกิจใหม่
                         existingPlayer.nickname = nickname;
                         existingPlayer.dept = dept;
                         existingPlayer.mission = customMission;
@@ -647,7 +661,6 @@
             renderStats();
         }
 
-        // 2. ระบบ Modal ยืนยันรหัสก่อนรีสตาร์ททุกอย่าง
         function openRestartModal() {
             document.getElementById('restart-confirm-pin').value = "";
             document.getElementById('restart-modal').classList.remove('hidden');
@@ -665,7 +678,6 @@
                 return;
             }
 
-            // รีเซ็ตสถานะผู้เล่นทุกคนกลับเป็นค่าเริ่มต้น (คงรายชื่อและภารกิจไว้)
             window.players.forEach(p => {
                 p.pin = null;
                 p.alive = true;
@@ -688,7 +700,6 @@
             goToView(1);
         }
 
-        // เริ่มต้นเปิดหน้าแรก
         if (currentUser === STAFF_USER) {
             goToView(4);
         } else if (currentUser) {
