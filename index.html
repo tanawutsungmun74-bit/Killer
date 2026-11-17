@@ -48,7 +48,7 @@
                 <!-- ฟอร์มล็อกอิน -->
                 <form id="form-login" class="space-y-4 bg-slate-900/50 p-4 rounded-xl border border-slate-700">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อ-นามสกุลจริง</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อผู้ใช้สตาฟ (smoeng69) หรือชื่อ-นามสกุลผู้เล่น</label>
                         <input type="text" id="login-fullname" required placeholder="เช่น วิศวะ เกียร์ทอง" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-emerald-500">
                     </div>
                     <div>
@@ -235,7 +235,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <script>
         const STAFF_USER = "smoeng69";
-        const STAFF_PASS = "002569";
+        const STAFF_PASS = "002569"; // Staff login PIN (6 digits)
 
         const firebaseConfig = {
             apiKey: "AIzaSyBzwHipnMgRrlJi6xKMWfCG9ce0PC5i2TY",
@@ -429,7 +429,7 @@
             const fullnameInput = document.getElementById("login-fullname").value.trim().replace(/\s+/g, " ");
             const pinInput = document.getElementById("login-pin").value.trim();
 
-            if (fullnameInput === STAFF_USER) {
+            if (fullnameInput.toLowerCase() === STAFF_USER.toLowerCase()) {
                 if (pinInput === STAFF_PASS) {
                     currentUser = STAFF_USER;
                     saveLocalSession();
