@@ -249,9 +249,6 @@
         const STAFF_USER = "smoeng69";
         const STAFF_PASS = "2569";
 
-        // เคลียร์ค่าเริ่มต้นให้เป็นก้อนว่างเปล่า (ไม่มีข้อมูลตัวอย่างค้างอีกต่อไป)
-        let defaultPlayers = [];
-
         window.players = [];
         let killHistory = [];
         let recentLogins = [];
@@ -259,8 +256,8 @@
 
         // โหลดข้อมูลแบบ Realtime จาก Firebase
         function loadState() {
-            const savedUser = localStorage.getItem('killer_current_user_v6');
-            const savedRecent = localStorage.getItem('killer_recent_logins_v6');
+            const savedUser = localStorage.getItem('killer_current_user_v7');
+            const savedRecent = localStorage.getItem('killer_recent_logins_v7');
             if (savedUser) currentUser = savedUser;
             if (savedRecent) recentLogins = JSON.parse(savedRecent);
 
@@ -289,8 +286,8 @@
         function saveState() {
             db.ref('players').set(window.players);
             db.ref('killHistory').set(killHistory);
-            localStorage.setItem('killer_current_user_v6', currentUser || '');
-            localStorage.setItem('killer_recent_logins_v6', JSON.stringify(recentLogins));
+            localStorage.setItem('killer_current_user_v7', currentUser || '');
+            localStorage.setItem('killer_recent_logins_v7', JSON.stringify(recentLogins));
         }
 
         loadState();
@@ -612,7 +609,7 @@
                             fullname: fullname,
                             nickname: nickname,
                             dept: dept,
-                            pin: null, // บังคับเป็น null เสมอ
+                            pin: null, // บังคับเป็น null เสมอ เพื่อให้ผู้เล่นตั้งรหัสเองตอนล็อกอินครั้งแรก
                             alive: true,
                             kills: 0,
                             mission: customMission,
@@ -673,7 +670,7 @@
                 return;
             }
 
-            window.players = []; // ล้างรายชื่อทั้งหมดเกลี้ยง
+            window.players = [];
             killHistory = [];
             saveState();
 
