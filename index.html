@@ -220,7 +220,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-slate-300 mb-1">กรอกรหัสล็อกอินสตาฟเพื่อยืนยัน:</label>
-                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (2569)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
+                    <input type="password" id="restart-confirm-pin" placeholder="รหัสสตาฟ (0203)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:border-rose-500">
                 </div>
                 <div class="flex gap-2">
                     <button type="button" onclick="closeRestartModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs py-2.5 rounded-lg transition">ยกเลิก</button>
@@ -596,6 +596,7 @@
             }
         }
 
+        // แก้ไขให้ช่อง PIN เป็น null เสมอสำหรับผู้เล่นใหม่
         function importPlayersData() {
             const raw = document.getElementById('admin-import-data').value.trim();
             if (!raw) { alert("กรุณากรอกข้อมูลรายชื่อและภารกิจ"); return; }
@@ -618,7 +619,7 @@
                             fullname: fullname,
                             nickname: nickname,
                             dept: dept,
-                            pin: null,
+                            pin: null, // บังคับให้เป็น null เพื่อให้ผู้เล่นตั้งรหัสเองตอนล็อกอินครั้งแรก
                             alive: true,
                             kills: 0,
                             mission: customMission,
@@ -627,6 +628,7 @@
                         });
                         added++;
                     } else {
+                        // อัปเดตข้อมูลเฉพาะชื่อเล่น ภาควิชา และภารกิจ (ไม่ไปทับสถานะ pin หรือสถานะชีวิตเดิม)
                         existingPlayer.nickname = nickname;
                         existingPlayer.dept = dept;
                         existingPlayer.mission = customMission;
